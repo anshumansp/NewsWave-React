@@ -1,29 +1,54 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
-import newsData from "./News.json"
+import newsData from "./News.json";
 
 const articlesObj = newsData;
 
-export class News extends Component {
+class News extends Component {
   constructor() {
     super();
-    console.log("This is the constructor of News Component");
     this.state = {
       articles: articlesObj.articles,
       loading: false
-    }
+    };
   }
-  
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData = async () => {
+    try {
+      const currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() - 2);
+      const twoDaysBackDate = currentDate.toISOString().split('T')[0];
+
+      const category = "News"
+
+      const response = await fetch(`https://newsapi.org/v2/everything?q=${category}&from=${twoDaysBackDate}&sortBy=popularity&apiKey=55701431df3b413882f4ba316e8e23b2`);
+      if (response.ok) {
+        const newData = await response.json();
+        this.setState({ articles: newData.articles, loading: false });
+      } else {
+        console.error("Error fetching data");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   render() {
-    const articleComponents = this.state.articles.map((article, index) => (
+    const first21Articles = this.state.articles.slice(0, 21);
+
+    const articleComponents = first21Articles.map((article, index)=> (
       <NewsItem
         key={index}
-        author={article.source.name}
+        source={article.source.name}
         title={article.title}
         url={article.url}
         urlToImage={article.urlToImage}
         description={article.description}
+        publishTime={article.publishedAt}
       />
     ));
 
@@ -32,8 +57,7 @@ export class News extends Component {
         <div className="bg-black flex justify-center items-center flex-col h-24 my-3 text-5xl text-center">
           <h1>Discover Latest News & Trends</h1>
         </div>
-        {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-12 justify-center"> */}
-          <div class="flex flex-row items-stretch flex-wrap mx-8">
+        <div className="flex flex-row items-stretch flex-wrap mx-8">
           {articleComponents}
         </div>
       </div>

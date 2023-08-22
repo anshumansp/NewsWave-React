@@ -32,6 +32,20 @@ export class Navbar extends Component {
                 Contact Us
               </a>
             </nav>
+
+
+            <div className="relative mr-2">
+              <input
+                type="text"
+                className="w-full bg-black py-2 pl-3 pr-3 mr-2 border rounded-md"
+                placeholder="Search By Category"
+              />
+            </div>
+            <button className="my-3 text-white border py-2 px-5 rounded-md bg-gray-800 hover:bg-black">
+              Search
+            </button>
+
+
           </div>
         </header>
       </div>
