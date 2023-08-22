@@ -29,10 +29,11 @@ export class News extends Component {
 
     return (
       <div>
-        <div className="bg-black flex justify-center items-center flex-col h-24 m-4 text-5xl text-center">
+        <div className="bg-black flex justify-center items-center flex-col h-24 my-3 text-5xl text-center">
           <h1>Discover Latest News & Trends</h1>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-12 justify-center">
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-12 justify-center"> */}
+          <div class="flex flex-row items-stretch flex-wrap mx-8">
           {articleComponents}
         </div>
       </div>
