@@ -31,7 +31,7 @@ export default class App extends Component {
     return (
       <div>
         <Navbar search={this.search}/>
-        <News newCategory={this.state.category}/>
+        <News newCategory={this.state.category} pageSize={24}/>
         {/* <About /> */}
       </div>
     );

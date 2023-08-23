@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
+import Spinner from "./Spinner";
 
 class News extends Component {
   constructor() {
@@ -19,7 +20,7 @@ class News extends Component {
       currentDate.setDate(currentDate.getDate() - 2);
       const twoDaysBackDate = currentDate.toISOString().split("T")[0];
       const category = newCategory || "Business";
-      const url = `https://newsapi.org/v2/everything?q=${category}&from=${twoDaysBackDate}&sortBy=popularity&apiKey=55701431df3b413882f4ba316e8e23b2&page=${this.state.page}`;
+      const url = `https://newsapi.org/v2/everything?q=${category}&from=${twoDaysBackDate}&sortBy=popularity&apiKey=55701431df3b413882f4ba316e8e23b2&page=${this.state.page}&pageSize=${this.props.pageSize}`;
       const response = await fetch(url);
 
       // `apiKey1=55701431df3b413882f4ba316e8e23b2`
@@ -30,8 +31,8 @@ class News extends Component {
         const newData = await response.json();
         this.setState({
           articles: newData.articles,
-          loading: false,
           totalResults: newData.totalResults,
+          loading: false,
         });
       } else {
         console.error("Error fetching data");
@@ -44,20 +45,22 @@ class News extends Component {
   };
 
   handlePrevClick = () => {
-    this.setState({ page: this.state.page - 1 }, () => {
+    this.setState({ page: this.state.page - 1, loading: true }, () => {
       console.log("prev")
       this.fetchData();
     });
+    this.setState({loading: false})
   };
 
   handleNextClick = () => {
-    this.setState({ page: this.state.page + 1 }, () => {
-      if (this.state.page > Math.ceil(this.state.totalResults / 18)) {
+    this.setState({ page: this.state.page + 1, loading: true }, () => {
+      if (this.state.page > Math.ceil(this.state.totalResults / this.props.pageSize)) {
         console.log("No More Results Found");
       } else {
         this.fetchData();
       }
     });
+    this.setState({loading: false})
   };
 
   componentDidMount() {
@@ -74,8 +77,7 @@ class News extends Component {
   }
 
   render() {
-    const first21Articles = this.state.articles.slice(0, 18);
-    const articleComponents = first21Articles.map((article, index) => (
+    const articleComponents = !(this.state.loading) && this.state.articles.map((article, index) => (
       <NewsItem
         key={index}
         source={article.source.name}
@@ -92,6 +94,9 @@ class News extends Component {
         <div className="bg-black flex justify-center items-center flex-col h-20 my-3 text-5xl text-center">
           <h1>Discover Latest News & Trends</h1>
         </div>
+        <div className="flex justify-center items-center">
+          {this.state.loading && <Spinner />}
+        </div>
         <div className="flex flex-row items-stretch flex-wrap mx-8">
           {articleComponents}
         </div>
@@ -107,10 +112,10 @@ class News extends Component {
           </button>
 
           <button
-            disabled={this.state.page > Math.ceil(this.state.totalResults/18)}
+            disabled={this.state.page > Math.ceil(this.state.totalResults/this.props.pageSize)}
             onClick={this.handleNextClick}
             className={`inline-flex items-center bg-gray-800 border-0 py-3 px-4 focus:outline-none hover:bg-gray-500 rounded text-white mt-4 md:mt-0
-            ${this.state.page > Math.ceil(this.state.totalResults/18)? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-500'} `}
+            ${this.state.page > Math.ceil(this.state.totalResults/this.props.pageSize)? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-500'} `}
           >
             Next &#8594;
           </button>
