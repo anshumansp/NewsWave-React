@@ -2,7 +2,7 @@ import "./App.css";
 import React, { Component } from "react";
 import Navbar from "./components/Navbar";
 import News from "./components/News";
-import About from "./components/About";
+// import About from "./components/About";
 
 export default class App extends Component {
   constructor() {
@@ -32,7 +32,7 @@ export default class App extends Component {
       <div>
         <Navbar search={this.search}/>
         <News newCategory={this.state.category}/>
-        <About />
+        {/* <About /> */}
       </div>
     );
   }

@@ -30,7 +30,7 @@ function countDays(publishTime) {
 export  default class News extends Component {
   render() {
     let {description, source, title, url, urlToImage, publishTime} = this.props;
-    const limitedText = limitText(description, 20);
+    const limitedText = limitText(description || " ", 20);
     const publishedAt = countDays(publishTime)
 
     return (
@@ -38,7 +38,10 @@ export  default class News extends Component {
         <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden">
           <img
             className="lg:h-64 md:h-32 w-full object-cover object-center"
-            src={urlToImage || "https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"}
+            src={urlToImage? urlToImage : "https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"}
+            onError={(e) => {
+              e.target.src = "https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80";
+            }}
             alt="news"
           />
           <div className="p-6">
