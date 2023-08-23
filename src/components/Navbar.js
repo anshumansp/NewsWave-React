@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 export class Navbar extends Component {
   render() {
+    let {search} = this.props
     return (
       <div>
         <header className="text-gray-400 bg-gray-900 body-font">
@@ -37,11 +38,12 @@ export class Navbar extends Component {
             <div className="relative mr-2">
               <input
                 type="text"
+                id="searchBar"
                 className="w-full bg-black py-2 pl-3 pr-3 mr-2 border rounded-md"
                 placeholder="Search By Category"
               />
             </div>
-            <button className="my-3 text-white border py-2 px-5 rounded-md bg-gray-800 hover:bg-black">
+            <button onClick={search} className="my-3 text-white border py-2 px-5 rounded-md bg-gray-800 hover:bg-black">
               Search
             </button>
 

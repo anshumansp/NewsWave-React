@@ -10,14 +10,13 @@ function limitText(text, maxWords) {
 
 function countDays(publishTime) {
   const currentDate = new Date();
-  const today = new Date(currentDate.toISOString().split('T')[0]);
-  const publishDate = new Date(publishTime.split('T')[0]);
-  const timeDifference = today - publishDate; 
+  const today = currentDate;
   
-  const seconds = timeDifference / 1000;
-  const minutes = seconds / 60;
-  const hours = minutes / 60;
-  const days = hours / 24;
+  const publishDate = new Date(publishTime);
+  const timeDifference = today - publishDate;
+
+  const millisecondsInADay = 24 * 60 * 60 * 1000;
+  const days = Math.floor(timeDifference / millisecondsInADay);
 
   if(days === 0) {
     return "Published Today"

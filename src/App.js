@@ -5,8 +5,22 @@ import News from "./components/News";
 import About from "./components/About";
 
 export default class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      category: ""
+    }
+  }
+
   componentDidMount() {
     this.changeStyle();
+  }
+
+  search = () => {
+    const searchBar = document.getElementById("searchBar");
+    let category = searchBar.value;
+    searchBar.value = "";
+    this.setState({category: category})
   }
 
   changeStyle = () => {
@@ -16,8 +30,8 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <Navbar />
-        <News />
+        <Navbar search={this.search}/>
+        <News newCategory={this.state.category}/>
         <About />
       </div>
     );
