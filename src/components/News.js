@@ -64,8 +64,17 @@ class News extends Component {
     });
   };
 
+  capitalizeIt = (word) => {
+    return word.charAt(0).toUpperCase() + word.slice(1)
+  }
+
   componentDidMount() {
     this.fetchData();
+    if (this.props.category !== "general") {
+      document.title = `NewsWave | ${this.capitalizeIt(this.props.category)} News`
+    } else {
+      document.title = "NewsWave - Discover Trending and Latest News"
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -100,7 +109,7 @@ class News extends Component {
         <div className="bg-black flex justify-center items-center flex-col h-20 my-3 text-5xl text-center">
         {!this.state.loading && (
           (this.state.totalResults !== 0) ? (
-            <h1 className="font-serif">Top News Headlines</h1>
+            <h1 className="font-serif">Top {this.capitalizeIt(this.props.category)} Headlines</h1>
           ) : (
             <h2 className="mt-96">No News Available</h2>
           )
