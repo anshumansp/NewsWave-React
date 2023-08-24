@@ -1,8 +1,21 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
 import Spinner from "./Spinner";
+import PropTypes from 'prop-types'
 
 class News extends Component {
+  static defaultProps = {
+    pageSize : 18,
+    country: "us",
+    category: "general"
+  }
+
+  static propTypes = {
+    pageSize: PropTypes.number.isRequired,
+    country: PropTypes.string,
+    category: PropTypes.string
+  }
+
   constructor() {
     super();
     this.state = {
@@ -13,14 +26,10 @@ class News extends Component {
     };
   }
 
-  fetchData = async (newCategory) => {
+  fetchData = async () => {
     try {
       this.setState({ loading: true });
-      const currentDate = new Date();
-      currentDate.setDate(currentDate.getDate() - 2);
-      const twoDaysBackDate = currentDate.toISOString().split("T")[0];
-      const category = newCategory || "Business";
-      const url = `https://newsapi.org/v2/everything?q=${category}&from=${twoDaysBackDate}&sortBy=popularity&apiKey=55701431df3b413882f4ba316e8e23b2&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+      const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=cb19d96dc54a4bd7b7192585cdec959d&page=${this.state.page}&pageSize=${this.props.pageSize}`;
       const response = await fetch(url);
 
       // `apiKey1=55701431df3b413882f4ba316e8e23b2`
@@ -46,21 +55,23 @@ class News extends Component {
 
   handlePrevClick = () => {
     this.setState({ page: this.state.page - 1, loading: true }, () => {
-      console.log("prev")
       this.fetchData();
     });
-    this.setState({loading: false})
+    this.setState({ loading: false });
   };
 
   handleNextClick = () => {
     this.setState({ page: this.state.page + 1, loading: true }, () => {
-      if (this.state.page > Math.ceil(this.state.totalResults / this.props.pageSize)) {
+      if (
+        this.state.page >
+        Math.ceil(this.state.totalResults / this.props.pageSize)
+      ) {
         console.log("No More Results Found");
       } else {
         this.fetchData();
       }
     });
-    this.setState({loading: false})
+    this.setState({ loading: false });
   };
 
   componentDidMount() {
@@ -68,31 +79,40 @@ class News extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.newCategory !== prevProps.newCategory) {
-      const { newCategory } = this.props;
-      if (newCategory.split(" ").filter(Boolean).length > 0) {
-        this.fetchData(newCategory);
+    if (this.props.category !== prevProps.category) {
+      const { category } = this.props;
+      if (category.split(" ").filter(Boolean).length > 0) {
+        this.fetchData();
       }
     }
   }
 
   render() {
-    const articleComponents = !(this.state.loading) && this.state.articles.map((article, index) => (
-      <NewsItem
-        key={index}
-        source={article.source.name}
-        title={article.title}
-        url={article.url}
-        urlToImage={article.urlToImage}
-        description={article.description}
-        publishTime={new Date(article.publishedAt)}
-      />
-    ));
+    const articleComponents =
+      !this.state.loading &&
+      this.state.articles.map((article, index) => (
+        <NewsItem
+          key={index}
+          source={article.source.name}
+          title={article.title}
+          url={article.url}
+          urlToImage={article.urlToImage}
+          description={article.description}
+          publishTime={new Date(article.publishedAt)}
+        />
+      ));
 
     return (
       <div>
         <div className="bg-black flex justify-center items-center flex-col h-20 my-3 text-5xl text-center">
-          <h1>Discover Latest News & Trends</h1>
+        {!this.state.loading && (
+          (this.state.totalResults !== 0) ? (
+            <h1 className="font-serif">Top News Headlines</h1>
+          ) : (
+            <h2 className="mt-96">No News Available</h2>
+          )
+        )}
+
         </div>
         <div className="flex justify-center items-center">
           {this.state.loading && <Spinner />}
@@ -101,25 +121,39 @@ class News extends Component {
           {articleComponents}
         </div>
 
+        {(this.state.totalResults !== 0) && 
         <div className="flex justify-between mx-14 my-8">
           <button
             disabled={this.state.page <= 1}
             onClick={this.handlePrevClick}
             className={`inline-flex items-center bg-gray-800 border-0 py-3 px-4 focus:outline-none hover:bg-gray-500 rounded text-white mt-4 md:mt-0 
-            ${this.state.page <= 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-500'} rounded text-white mt-4 md:mt-0`}
+            ${
+              this.state.page <= 1
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:bg-gray-500"
+            } rounded text-white mt-4 md:mt-0`}
           >
             &#8592; Previous
           </button>
 
           <button
-            disabled={this.state.page > Math.ceil(this.state.totalResults/this.props.pageSize)}
+            disabled={
+              this.state.page >
+              Math.ceil(this.state.totalResults / this.props.pageSize)
+            }
             onClick={this.handleNextClick}
             className={`inline-flex items-center bg-gray-800 border-0 py-3 px-4 focus:outline-none hover:bg-gray-500 rounded text-white mt-4 md:mt-0
-            ${this.state.page > Math.ceil(this.state.totalResults/this.props.pageSize)? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-500'} `}
+            ${
+              this.state.page >
+              Math.ceil(this.state.totalResults / this.props.pageSize)
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:bg-gray-500"
+            } `}
           >
             Next &#8594;
           </button>
         </div>
+      }
       </div>
     );
   }

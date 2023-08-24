@@ -1,12 +1,13 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom'
 
 export class Navbar extends Component {
   render() {
-    let {search} = this.props
+    let { search } = this.props;
     return (
       <div>
         <header className="text-gray-400 bg-gray-900 body-font">
-          <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+          <div className="container mx-auto flex flex-wrap p-4 flex-col md:flex-row items-center">
             <a
               className="flex title-font font-medium items-center text-white mb-4 md:mb-0"
               href="/"
@@ -20,18 +21,30 @@ export class Navbar extends Component {
             </a>
 
             <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-700	flex flex-wrap items-center text-base justify-center">
-              <a className="mr-7 cursor-pointer hover:text-white" href="/">
+              <Link className="mr-7 cursor-pointer hover:text-white" to="/">
                 Home
-              </a>
-              <a className="mr-7 cursor-pointer hover:text-white" href="/">
-                Categories
-              </a>
-              <a className="mr-7 cursor-pointer hover:text-white" href="/">
+              </Link>
+              <Link className="mr-7 cursor-pointer hover:text-white" to="/business">
+                Business
+              </Link>
+              <Link className="mr-7 cursor-pointer hover:text-white" to="/technology">
+                Technology
+              </Link>
+              <Link className="mr-7 cursor-pointer hover:text-white" to="/science">
+                Science
+              </Link>
+              <Link className="mr-7 cursor-pointer hover:text-white" to="/health">
+                Health
+              </Link>
+              <Link className="mr-7 cursor-pointer hover:text-white" to="/sports">
+                Sports
+              </Link>
+              <Link className="mr-7 cursor-pointer hover:text-white" to="/entertainment">
+                Entertainment
+              </Link>
+              <Link className="mr-7 cursor-pointer hover:text-white" to="/about">
                 About
-              </a>
-              <a className="mr-7 cursor-pointer hover:text-white" href="/">
-                Contact Us
-              </a>
+              </Link>
             </nav>
 
 
