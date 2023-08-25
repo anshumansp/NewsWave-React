@@ -43,7 +43,7 @@ export default class App extends Component {
   render() {
     const newsProps = {
       setProgress: this.setProgress,
-      pageSize: 9,
+      pageSize: 15,
       country: "in",
       apiKey : process.env.REACT_APP_API_KEY
     }

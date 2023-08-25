@@ -126,8 +126,7 @@ class News extends Component {
 
   componentWillUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
-  }
-  
+  }  
 
   render() {
     return (
@@ -144,7 +143,7 @@ class News extends Component {
         </div>
 
         <div className="flex justify-center items-center">
-          {this.state.loading && this.state.progress < 100 && <Spinner />}
+          {this.state.loading && <Spinner />}
         </div>
 
           <div className="flex flex-row items-stretch flex-wrap mx-8">
