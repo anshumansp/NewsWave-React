@@ -35,9 +35,15 @@ class News extends Component {
 
   fetchData = async () => {
     try {
+      this.props.setProgress(20);
       this.setState({ loading: true });
+
       const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=55701431df3b413882f4ba316e8e23b2&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+      this.props.setProgress(40);
+
       const response = await fetch(url);
+      this.props.setProgress(70);
+
       if (response.ok) {
         const newData = await response.json();
         this.setState({
@@ -45,9 +51,13 @@ class News extends Component {
           totalResults: newData.totalResults,
           loading: false,
         });
+
+        this.props.setProgress(100);
+
       } else {
         console.error("Error fetching data");
         this.setState({ loading: false });
+        this.props.setProgress(100);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -139,7 +149,7 @@ class News extends Component {
         </div>
 
         <div className="flex justify-center items-center">
-          {this.state.loading && <Spinner />}
+          {this.state.loading && this.state.progress < 100 && <Spinner />}
         </div>
 
           <div className="flex flex-row items-stretch flex-wrap mx-8">
