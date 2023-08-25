@@ -33,7 +33,7 @@ export default class App extends Component {
   };
 
   render() {
-    const pageSize = 18;
+    const pageSize = 6;
     const country = "in"
     return (
       <div>
