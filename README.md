@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Run it locally
+
+### 'clone the repository'
+
+CORS are enabled only for localhost from News-API for free version, so run it locally and use it.  
+
 ## Available Scripts
 
 In the project directory, you can run:
