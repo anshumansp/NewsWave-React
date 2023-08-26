@@ -10,17 +10,18 @@ const News = (props) => {
   const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
   const [debounceFetchMore, setDebounceFetchMore] = useState(null);
+  const [effWorking, setEffWorking] = useState(false)
 
   const capitalizeIt = (word) => {
     return word.charAt(0).toUpperCase() + word.slice(1);
   };
 
-  const fetchData = async () => {
+  const fetchData = async (category) => {
     try {
       props.setProgress(20);
       setLoading(true)
 
-      const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
+      const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${category || props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
       props.setProgress(40);
 
       const response = await fetch(url);
@@ -70,7 +71,6 @@ const News = (props) => {
 
     if (scrollY + windowHeight + 2 >= bodyHeight && articles.length !== totalResults) {
       setLoading(true);
-      console.log(articles.length, totalResults)
       setDebounceFetchMore(setTimeout(fetchMoreDataWithDebounce, 1500));
     }
   };
@@ -91,18 +91,15 @@ const News = (props) => {
     // eslint-disable-next-line
   }, [])
 
-  // useEffect((prevProps)=> {
-  //   // eslint-disable-next-line
-  //   if (props.category !== prevProps.category) {
-  //     const { category } = props;
-  //     if (category.split(" ").filter(Boolean).length > 0) {
-  //       fetchData();
-  //     }
-  //   }
-  // }, [props.category])
+  useEffect(()=> {
+    if(props.newCategory.split(" ").filter(Boolean).length >= 0 && props.newCategory !== props.category){
+      setEffWorking(true)
+      fetchData(props.newCategory);
+    }
+    // eslint-disable-next-line
+  }, [props.newCategory])
 
   useEffect(() => {
-     // eslint-disable-next-line
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -112,22 +109,22 @@ const News = (props) => {
  
   return (
       <div>
-        <div className="bg-black flex justify-center items-center flex-col h-20 my-3 text-5xl text-center">
-          {!loading &&
-            (totalResults !== 0 ? (
-              <h1 className="font-serif">
-                Top {capitalizeIt(props.category)} Headlines
-              </h1>
-            ) : (
-              <h2 className="mt-96">No News Available</h2>
-            ))}
-        </div>
+    <div className="bg-black flex justify-center items-center flex-col h-20 mt-28 text-5xl text-center">
+      {!loading &&
+        (totalResults !== 0 ? (
+          <h1 className="font-serif">
+            Top {capitalizeIt(props.category)} Headlines
+          </h1>
+        ) : (
+          <h2 className="mt-96">No News Available</h2>
+        ))}
+    </div>
 
         <div className="flex justify-center items-center">
           {loading && <Spinner />}
         </div>
 
-          <div className="flex flex-row items-stretch flex-wrap mx-8">
+          {effWorking && !loading && <div className="flex flex-row items-stretch flex-wrap mx-8">
             {articles.map((article, index) => {
               return (
                 <NewsItem
@@ -141,9 +138,9 @@ const News = (props) => {
                 />
               );
             })}
-          </div>
+          </div>}
 
-          {(loading) && articles.length < totalResults && (
+          {(loading) && !effWorking && articles.length < totalResults && (
             <div className="flex justify-center items-center m-12 h-20">
               <Spinner/>
             </div>
