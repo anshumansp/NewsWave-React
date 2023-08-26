@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 function limitText(text, maxWords) {
   const words = text.split(' ');
@@ -27,9 +27,8 @@ function countDays(publishTime) {
   }
 }
 
-export  default class News extends Component {
-  render() {
-    let {description, source, title, url, urlToImage, publishTime} = this.props;
+const News = (props) => {
+    let {description, source, title, url, urlToImage, publishTime} = props;
     const limitedText = limitText(description || " ", 20);
     const publishedAt = countDays(publishTime)
 
@@ -78,5 +77,6 @@ export  default class News extends Component {
         </div>
       </div>
     );
-  }
 }
+
+export default News;

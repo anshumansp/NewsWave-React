@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 
-export class About extends Component {
-  render() {
+const About = () => {
     return (
       <div>
         <section className="text-gray-600 body-font">
@@ -57,6 +56,5 @@ export class About extends Component {
       </div>
     );
   }
-}
 
 export default About;

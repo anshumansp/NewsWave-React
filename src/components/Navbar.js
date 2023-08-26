@@ -1,20 +1,13 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-export class Navbar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeLink: "/",
-    };
-  }
+const Navbar = (props) => {
 
-  handleNavLinkClick = (to) => {
-    this.setState({ activeLink: to });
+  const [activeLink, setActiveLink ] = useState("/");
+
+  const handleNavLinkClick = (to) => {
+    setActiveLink(to);
   };
-
-  render() {
-    let { search } = this.props;
     return (
       <div>
         <header className="text-gray-400 bg-gray-900 body-font">
@@ -35,63 +28,63 @@ export class Navbar extends Component {
               <Link
                 to="/"
                 className={`mr-7 cursor-pointer hover:text-white
-                ${ this.state.activeLink === "/" ? "text-white" : "text-gray-400"}`}
-                onClick={() => this.handleNavLinkClick("/")}
+                ${ activeLink === "/" ? "text-white" : "text-gray-400"}`}
+                onClick={() => handleNavLinkClick("/")}
               >
                 Home
               </Link>
               <Link
                 to="/business"
                 className={`mr-7 cursor-pointer hover:text-white
-                ${ this.state.activeLink === "/business" ? "text-white" : "text-gray-400"}`}
-                onClick={() => this.handleNavLinkClick("/business")}
+                ${ activeLink === "/business" ? "text-white" : "text-gray-400"}`}
+                onClick={() => handleNavLinkClick("/business")}
               >
                 Business
               </Link>
               <Link
                 className={`mr-7 cursor-pointer hover:text-white
-                ${ this.state.activeLink === "/technology" ? "text-white" : "text-gray-400"}`}
-                onClick={() => this.handleNavLinkClick("/technology")}
+                ${ activeLink === "/technology" ? "text-white" : "text-gray-400"}`}
+                onClick={() => handleNavLinkClick("/technology")}
                 to="/technology"
               >
                 Technology
               </Link>
               <Link
                 className={`mr-7 cursor-pointer hover:text-white
-                ${ this.state.activeLink === "/science" ? "text-white" : "text-gray-400"}`}
-                onClick={() => this.handleNavLinkClick("/science")}
+                ${ activeLink === "/science" ? "text-white" : "text-gray-400"}`}
+                onClick={() => handleNavLinkClick("/science")}
                 to="/science"
               >
                 Science
               </Link>
               <Link
                 className={`mr-7 cursor-pointer hover:text-white
-                ${ this.state.activeLink === "/health" ? "text-white" : "text-gray-400"}`}
-                onClick={() => this.handleNavLinkClick("/health")}
+                ${ activeLink === "/health" ? "text-white" : "text-gray-400"}`}
+                onClick={() => handleNavLinkClick("/health")}
                 to="/health"
               >
                 Health
               </Link>
               <Link
                 className={`mr-7 cursor-pointer hover:text-white
-                ${ this.state.activeLink === "/sports" ? "text-white" : "text-gray-400"}`}
-                onClick={() => this.handleNavLinkClick("/sports")}
+                ${ activeLink === "/sports" ? "text-white" : "text-gray-400"}`}
+                onClick={() => handleNavLinkClick("/sports")}
                 to="/sports"
               >
                 Sports
               </Link>
               <Link
                 className={`mr-7 cursor-pointer hover:text-white
-                ${ this.state.activeLink === "/entertainment" ? "text-white" : "text-gray-400"}`}
-                onClick={() => this.handleNavLinkClick("/entertainment")}
+                ${ activeLink === "/entertainment" ? "text-white" : "text-gray-400"}`}
+                onClick={() => handleNavLinkClick("/entertainment")}
                 to="/entertainment"
               >
                 Entertainment
               </Link>
               <Link
                 className={`mr-7 cursor-pointer hover:text-white
-                ${ this.state.activeLink === "/about" ? "text-white" : "text-gray-400"}`}
-                onClick={() => this.handleNavLinkClick("/about")}
+                ${ activeLink === "/about" ? "text-white" : "text-gray-400"}`}
+                onClick={() => handleNavLinkClick("/about")}
                 to="/about"
               >
                 About
@@ -107,7 +100,7 @@ export class Navbar extends Component {
               />
             </div>
             <button
-              onClick={search}
+              onClick={props.search}
               className="my-3 text-white border py-2 px-5 rounded-md bg-gray-800 hover:bg-black"
             >
               Search
@@ -117,6 +110,5 @@ export class Navbar extends Component {
       </div>
     );
   }
-}
 
 export default Navbar;
