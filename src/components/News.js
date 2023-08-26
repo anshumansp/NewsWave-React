@@ -18,26 +18,26 @@ const News = (props) => {
 
   const fetchData = async (category) => {
     try {
-      props.setProgress(20);
+      props.setTheProgress(20);
       setLoading(true)
 
       const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${category || props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
-      props.setProgress(40);
+      props.setTheProgress(40);
 
       const response = await fetch(url);
-      props.setProgress(70);
+      props.setTheProgress(70);
 
       if (response.ok) {
         const newData = await response.json();
         setArticles(newData.articles);
         setTotalResults(newData.totalResults);
         setLoading(false)
-        props.setProgress(100);
+        props.setTheProgress(100);
 
       } else {
         console.error("Error fetching data");
         setLoading(false)
-        props.setProgress(100);
+        props.setTheProgress(100);
       }
     } catch (error) {
       console.error("Error:", error);
