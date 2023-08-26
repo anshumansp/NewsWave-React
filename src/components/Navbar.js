@@ -10,7 +10,7 @@ const Navbar = (props) => {
   };
     return (
       <div>
-        <header className="text-gray-400 bg-gray-900 body-font">
+        <header className="text-gray-400 fixed top-0 right-0 w-full left-0 bg-gray-900 body-font">
           <div className="container mx-auto flex flex-wrap p-4 flex-col md:flex-row items-center">
             <a
               className="flex title-font font-medium items-center text-white mb-4 md:mb-0"
