@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 class News extends Component {
   static defaultProps = {
     pageSize: 18,
-    country: "us",
+    country: "in",
     category: "general",
   };
 
@@ -23,6 +23,7 @@ class News extends Component {
       loading: false,
       page: 1,
       totalResults: 0,
+      coChanging: false
     };
     this.debounceTimeout = null;
   }
@@ -47,15 +48,15 @@ class News extends Component {
         });
 
         this.props.setProgress(100);
-
+        this.setState({coChanging : false})
       } else {
         console.error("Error fetching data");
-        this.setState({ loading: false });
         this.props.setProgress(100);
+        this.setState({ loading: false, coChanging: false });
       }
     } catch (error) {
       console.error("Error:", error);
-      this.setState({ loading: false });
+      this.setState({ loading: false, coChanging: false });
     }
   };
 
@@ -103,6 +104,7 @@ class News extends Component {
   };
 
   componentDidMount() {
+    this.setState({coChanging : true})
     this.fetchData();
     if (this.props.category !== "general") {
       document.title = `NewsWave | ${this.capitalizeIt(
@@ -116,6 +118,7 @@ class News extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.country !== prevProps.country) {
+      this.setState({coChanging : true})
       this.fetchData();
     }
   }
@@ -127,7 +130,7 @@ class News extends Component {
   render() {
     return (
       <div>
-        <div className="bg-black flex justify-center items-center flex-col h-20 my-3 text-5xl text-center">
+        <div className="bg-black flex justify-center items-center flex-col h-20 mb-3 mt-24 text-5xl text-center">
           {!this.state.loading &&
             (this.state.totalResults !== 0 ? (
               <h1 className="font-serif">
@@ -143,7 +146,7 @@ class News extends Component {
         </div>
 
           <div className="flex flex-row items-stretch flex-wrap mx-8">
-            {this.state.articles.map((article, index) => {
+            {!this.state.coChanging && this.state.articles.map((article, index) => {
               return (
                 <NewsItem
                   key={index}
@@ -158,7 +161,7 @@ class News extends Component {
             })}
           </div>
 
-          {this.state.loading && this.state.articles.length < this.state.totalResults && (
+          {!this.state.coChanging && this.state.loading && this.state.articles.length < this.state.totalResults && (
             <div className="flex justify-center items-center m-12 h-20">
               <Spinner />
             </div>
