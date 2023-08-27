@@ -16,7 +16,8 @@ export default class App extends Component {
     super();
     this.state = {
       category: "",
-      progress: 0
+      progress: 0,
+      country: "in"
     }
   }
 
@@ -29,12 +30,16 @@ export default class App extends Component {
     this.changeStyle();
   }
 
-  search = () => {
-    const searchBar = document.getElementById("searchBar");
-    let category = searchBar.value;
-    searchBar.value = "";
-    this.setState({category: category})
+  handleCountryChange = (country) => {
+   this.setState({ country: country });
   }
+
+  // search = () => {
+  //   const searchBar = document.getElementById("searchBar");
+  //   let category = searchBar.value;
+  //   searchBar.value = "";
+  //   this.setState({category: category})
+  // }
 
   changeStyle = () => {
     document.body.classList.add("text-gray-400", "bg-black", "body-font");
@@ -44,14 +49,14 @@ export default class App extends Component {
     const newsProps = {
       setProgress: this.setProgress,
       pageSize: 15,
-      country: "in",
+      country: this.state.country,
       apiKey : process.env.REACT_APP_API_KEY
     }
 
     return (
       <div>
        <BrowserRouter>
-       <Navbar search={this.search} />
+       <Navbar search={this.search} country={this.handleCountryChange}/>
        <LoadingBar color='#22abba' progress={this.state.progress}/>
        <Routes>
         

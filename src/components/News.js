@@ -33,7 +33,6 @@ class News extends Component {
       this.setState({ loading: true });
 
       const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
-      console.log(url)
       this.props.setProgress(40);
 
       const response = await fetch(url);
@@ -116,11 +115,8 @@ class News extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.category !== prevProps.category) {
-      const { category } = this.props;
-      if (category.split(" ").filter(Boolean).length > 0) {
-        this.fetchData();
-      }
+    if (this.props.country !== prevProps.country) {
+      this.fetchData();
     }
   }
 

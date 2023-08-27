@@ -6,6 +6,7 @@ export class Navbar extends Component {
     super(props);
     this.state = {
       activeLink: "/",
+      country: 'in'
     };
   }
 
@@ -13,8 +14,14 @@ export class Navbar extends Component {
     this.setState({ activeLink: to });
   };
 
+  onChange = (event) => {
+    this.setState({ country: event.target.value });
+    this.props.country(event.target.value)
+  }
+
   render() {
-    let { search } = this.props;
+    // let { search } = this.props;
+    let { country } = this.state;
     return (
       <div>
         <header className="text-gray-400 bg-gray-900 body-font">
@@ -35,7 +42,9 @@ export class Navbar extends Component {
               <Link
                 to="/"
                 className={`mr-7 cursor-pointer hover:text-white
-                ${ this.state.activeLink === "/" ? "text-white" : "text-gray-400"}`}
+                ${
+                  this.state.activeLink === "/" ? "text-white" : "text-gray-400"
+                }`}
                 onClick={() => this.handleNavLinkClick("/")}
               >
                 Home
@@ -43,14 +52,22 @@ export class Navbar extends Component {
               <Link
                 to="/business"
                 className={`mr-7 cursor-pointer hover:text-white
-                ${ this.state.activeLink === "/business" ? "text-white" : "text-gray-400"}`}
+                ${
+                  this.state.activeLink === "/business"
+                    ? "text-white"
+                    : "text-gray-400"
+                }`}
                 onClick={() => this.handleNavLinkClick("/business")}
               >
                 Business
               </Link>
               <Link
                 className={`mr-7 cursor-pointer hover:text-white
-                ${ this.state.activeLink === "/technology" ? "text-white" : "text-gray-400"}`}
+                ${
+                  this.state.activeLink === "/technology"
+                    ? "text-white"
+                    : "text-gray-400"
+                }`}
                 onClick={() => this.handleNavLinkClick("/technology")}
                 to="/technology"
               >
@@ -58,7 +75,11 @@ export class Navbar extends Component {
               </Link>
               <Link
                 className={`mr-7 cursor-pointer hover:text-white
-                ${ this.state.activeLink === "/science" ? "text-white" : "text-gray-400"}`}
+                ${
+                  this.state.activeLink === "/science"
+                    ? "text-white"
+                    : "text-gray-400"
+                }`}
                 onClick={() => this.handleNavLinkClick("/science")}
                 to="/science"
               >
@@ -66,7 +87,11 @@ export class Navbar extends Component {
               </Link>
               <Link
                 className={`mr-7 cursor-pointer hover:text-white
-                ${ this.state.activeLink === "/health" ? "text-white" : "text-gray-400"}`}
+                ${
+                  this.state.activeLink === "/health"
+                    ? "text-white"
+                    : "text-gray-400"
+                }`}
                 onClick={() => this.handleNavLinkClick("/health")}
                 to="/health"
               >
@@ -74,7 +99,11 @@ export class Navbar extends Component {
               </Link>
               <Link
                 className={`mr-7 cursor-pointer hover:text-white
-                ${ this.state.activeLink === "/sports" ? "text-white" : "text-gray-400"}`}
+                ${
+                  this.state.activeLink === "/sports"
+                    ? "text-white"
+                    : "text-gray-400"
+                }`}
                 onClick={() => this.handleNavLinkClick("/sports")}
                 to="/sports"
               >
@@ -82,7 +111,11 @@ export class Navbar extends Component {
               </Link>
               <Link
                 className={`mr-7 cursor-pointer hover:text-white
-                ${ this.state.activeLink === "/entertainment" ? "text-white" : "text-gray-400"}`}
+                ${
+                  this.state.activeLink === "/entertainment"
+                    ? "text-white"
+                    : "text-gray-400"
+                }`}
                 onClick={() => this.handleNavLinkClick("/entertainment")}
                 to="/entertainment"
               >
@@ -90,7 +123,11 @@ export class Navbar extends Component {
               </Link>
               <Link
                 className={`mr-7 cursor-pointer hover:text-white
-                ${ this.state.activeLink === "/about" ? "text-white" : "text-gray-400"}`}
+                ${
+                  this.state.activeLink === "/about"
+                    ? "text-white"
+                    : "text-gray-400"
+                }`}
                 onClick={() => this.handleNavLinkClick("/about")}
                 to="/about"
               >
@@ -99,19 +136,25 @@ export class Navbar extends Component {
             </nav>
 
             <div className="relative mr-2">
-              <input
-                type="text"
-                id="searchBar"
-                className="w-full bg-black py-2 pl-3 pr-3 mr-2 border rounded-md"
-                placeholder="Search By Category"
-              />
+              <div>
+                <select
+                  className="w-36 text-white bg-gray-800 p-2 rounded"
+                  value={country}
+                  onChange={this.onChange}
+                >
+                  <option value="in">India</option>
+                  <option value="us">USA</option>
+                  <option value="gb">UK</option>
+                  <option value="au">Australia</option>
+                  <option value="ca">Canada</option>
+                  <option value="br">Brazil</option>
+                  <option value="ch">Switzerland</option>
+                  <option value="eg">Egypt</option>
+                  <option value="fr">France</option>
+                  <option value="sg">Singapore</option>
+                </select>
+              </div>
             </div>
-            <button
-              onClick={search}
-              className="my-3 text-white border py-2 px-5 rounded-md bg-gray-800 hover:bg-black"
-            >
-              Search
-            </button>
           </div>
         </header>
       </div>
@@ -120,3 +163,17 @@ export class Navbar extends Component {
 }
 
 export default Navbar;
+
+
+  /* <input
+                type="text"
+                id="searchBar"
+                className="w-full bg-black py-2 pl-3 pr-3 mr-2 border rounded-md"
+                placeholder="Search By Category"
+              /> */
+  /* <button
+              onClick={search}
+              className="my-3 text-white border py-2 px-5 rounded-md bg-gray-800 hover:bg-black"
+            >
+              Search
+            </button> */
