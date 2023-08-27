@@ -18,30 +18,32 @@ const News = (props) => {
 
   const fetchData = async (category) => {
     try {
-      props.setTheProgress(20);
+      props.setProgress(20);
       setLoading(true)
 
       const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${category || props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
-      props.setTheProgress(40);
+      props.setProgress(40);
 
       const response = await fetch(url);
-      props.setTheProgress(70);
+      props.setProgress(70);
 
       if (response.ok) {
         const newData = await response.json();
         setArticles(newData.articles);
         setTotalResults(newData.totalResults);
         setLoading(false)
-        props.setTheProgress(100);
-
+        props.setProgress(100);
+        setEffWorking(false)
       } else {
         console.error("Error fetching data");
         setLoading(false)
-        props.setTheProgress(100);
+        props.setProgress(100);
+        setEffWorking(false)
       }
     } catch (error) {
       console.error("Error:", error);
       setLoading(false)
+      setEffWorking(false)
     }
   };
 
@@ -124,7 +126,7 @@ const News = (props) => {
           {loading && <Spinner />}
         </div>
 
-          {effWorking && !loading && <div className="flex flex-row items-stretch flex-wrap mx-8">
+          {!effWorking && !loading && <div className="flex flex-row items-stretch flex-wrap mx-8">
             {articles.map((article, index) => {
               return (
                 <NewsItem
