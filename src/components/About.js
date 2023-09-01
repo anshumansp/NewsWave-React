@@ -5,7 +5,7 @@ export class About extends Component {
     return (
       <div>
         <section className="text-gray-600 body-font">
-          <div className="container px-5 py-8 mt-6 mx-auto flex flex-col">
+          <div className="container px-5 pt-8 pb-4 mt-10 mx-auto flex flex-col">
             <div className="lg:w-4/6 mt-10 mx-auto">
               <div className="rounded-lg h-64 overflow-hidden">
                 <img
@@ -37,8 +37,8 @@ export class About extends Component {
                     </p>
                   </div>
                 </div>
-                <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-200 sm:border-t-0 border-t mt-0 pt-0 sm:mt-0 text-center sm:text-left">
-                  <p className="leading-relaxed text-lg my-0">
+                <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-200 sm:border-t-0 border-t sm:mt-0 text-center sm:text-left">
+                  <p className="leading-relaxed text-lg">
                     Welcome to NewsWave! Your trusted source for the latest and
                     most accurate news from around the world. With a commitment
                     to delivering real news from reputable sources, we cover a
