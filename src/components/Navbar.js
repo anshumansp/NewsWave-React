@@ -23,7 +23,7 @@ export class Navbar extends Component {
     return (
       <div>
         <header className="fixed right-0 left-0 w-full top-0 text-gray-400 bg-gray-900 body-font">
-          <div className="container mx-auto flex flex-wrap p-4 flex-col md:flex-row items-center">
+          <div className="mx-auto flex flex-wrap p-8 flex-col md:flex-row items-center">
             <a
               className="flex title-font font-medium items-center text-white mb-4 md:mb-0"
               href="/"
@@ -36,7 +36,7 @@ export class Navbar extends Component {
               <span className="ml-3 text-xl">NewsWave</span>
             </a>
 
-            <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-700	flex flex-wrap items-center text-base justify-center">
+            <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-700	flex flex-wrap items-center  text-xl justify-center">
               <Link
                 to="/"
                 className={`mr-7 cursor-pointer hover:text-white
