@@ -130,7 +130,7 @@ class News extends Component {
   render() {
     return (
       <div>
-        <div className="bg-black flex justify-center items-center flex-col h-20 mb-3 mt-32 text-5xl text-center">
+        <div className="bg-black flex justify-center items-center flex-col h-20 mb-3 mt-28 text-5xl text-center">
           {!this.state.loading &&
             (this.state.totalResults !== 0 ? (
               <h1 className="font-serif">
