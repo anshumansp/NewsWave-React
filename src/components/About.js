@@ -6,7 +6,7 @@ export class About extends Component {
       <div>
         <section className="text-gray-600 body-font">
           <div className="container px-5 pt-8 pb-4 mt-10 mx-auto flex flex-col">
-            <div className="lg:w-4/6 mt-10 mx-auto">
+            <div className="lg:w-4/6 mt-24 mx-auto">
               <div className="rounded-lg h-64 overflow-hidden">
                 <img
                   alt="content"
@@ -49,7 +49,9 @@ export class About extends Component {
                     what's happening globally. Trust NewsWave to bring you the
                     news that matters, from the most reliable sources.
                   </p>
-                  <p className="leading-relaxed text-lg mt-8">All Rights Reserved | © 2023 - Anshuman Parmar</p>
+                  <p className="leading-relaxed text-lg mt-8">
+                    All Rights Reserved | © 2023 - Anshuman Parmar
+                  </p>
                 </div>
               </div>
             </div>
